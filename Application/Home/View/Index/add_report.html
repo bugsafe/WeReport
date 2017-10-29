@@ -1,0 +1,111 @@
+<include file="Public/header" /> 
+
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">创建报告</strong> / <small>Create Report</small></div>
+      </div>
+
+      <hr/>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+        </div>
+
+        <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+          <form action="{:U('Index/add_report')}" method="post" class="am-form am-form-horizontal" enctype="multipart/form-data">
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">报告模板 /Report Template</label>
+              <div class="am-u-sm-9">
+              	<select name="report_temp">
+                  <foreach  name="report_temp" item="vo">
+					         <option value="{$vo}">{$vo}</option>
+                  </foreach>
+              	</select>
+              </div>
+                <small>保存的模板,请不要使用中文名。</small>
+            </div>
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">报告名称 /Report Name</label>
+              <div class="am-u-sm-9">
+                <input type="text" id="report-name" name="report_name" placeholder="报告名称 /Report Name">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">项目方 /Poject</label>
+              <div class="am-u-sm-9">
+                <input type="text" id="report-name" name="poject_com" placeholder="填写你们公司或者你们想定义的名字">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="report-logo" class="am-u-sm-3 am-form-label">报告头部Logo / Logo</label>
+              <div class="am-u-sm-9">
+                <div class="am-form-group am-form-file">
+				  <button type="button" class="am-btn am-btn-danger am-btn-sm">
+				  <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
+				  <input id="doc-form-file" type="file" name="logo" multiple>
+				</div>
+				<div id="file-list"></div>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="start-time" class="am-u-sm-3 am-form-label">开始时间 / Start Time</label>
+              <div class="am-u-sm-9">
+                <p><input type="text" class="am-form-field" placeholder="开始时间 / Start Time" data-am-datepicker="" readonly name="start_time"/></p>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="end-tile" class="am-u-sm-3 am-form-label">结束时间 / End Time</label>
+              <div class="am-u-sm-9">
+                <p><input type="text" class="am-form-field" placeholder="结束时间 / End Time" data-am-datepicker="" readonly name="end_time"/></p>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="poject-person" class="am-u-sm-3 am-form-label">项目实施人员 / Person</label>
+              <div class="am-u-sm-9">
+                <input type="text" id="poject-person" placeholder="项目实施人员 / Person" name="person">
+                <small>项目实施人员，如果多名请使用","分割。</small>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <div class="am-u-sm-9 am-u-sm-push-3">
+                <button type="submit" class="am-btn am-btn-primary">创建报告</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer class="admin-content-footer">
+      <hr>
+      <p class="am-padding-left">© 2017 WeReport. 226safe Team.</p>
+    </footer>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<include file="Public/footer" /> 
+<script>
+  $(function() {
+    $('#doc-form-file').on('change', function() {
+      var fileNames = '';
+      $.each(this.files, function() {
+        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+      });
+      $('#file-list').html(fileNames);
+    });
+  });
+</script>

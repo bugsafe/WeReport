@@ -1,0 +1,116 @@
+<include file="Public/header" /> 
+
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">添加漏洞</strong> / <small>Add Bug</small></div>
+      </div>
+
+      <hr/>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+        </div>
+
+        <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+          <form action="{:U('Index/add_bug')}" method="post" class="am-form am-form-horizontal" enctype="multipart/form-data">
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">漏洞类型 /Bug Type</label>
+              <div class="am-u-sm-9">
+                <select name="bug_level">
+                  <option value="0">低危</option>
+                  <option value="1">中危</option>
+                  <option value="2">高危</option>
+                  <option value="3">严重</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">漏洞类型 /Bug Type</label>
+              <div class="am-u-sm-9">
+                <select name="bid">
+                <foreach name="bug_type_list" item="vo">
+                  <option value="{$vo.id}">{$vo.bug_name}</option>
+                </foreach>
+                </select>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">漏洞URL /Bug URL</label>
+              <div class="am-u-sm-9">
+                <input type="text" id="report-name" name="bug_url" placeholder="漏洞URL /Bug URL">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">漏洞参数 /Bug Param</label>
+              <div class="am-u-sm-9">
+                <input type="text" id="report-name" name="bug_param" placeholder="漏洞URL /Bug Param">
+              </div>
+            </div>
+
+
+            <div class="am-form-group" >
+              <label for="report-logo" class="am-u-sm-3 am-form-label">漏洞图片 / Image</label>
+
+              <div class="am-u-sm-9" id="bug_file_img">
+                <div class="am-form-group am-form-file">
+                  <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                  <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
+                  <input id="doc-form-file" type="file" name="bug_img[]" multiple>
+              </div>
+              <div id="file-list"></div>
+              </div>
+
+            </div>
+
+
+                <input type="hidden" name="pid" value="{$Think.get.pid|htmlspecialchars}">
+                <input type="hidden" name="sid" value="{$Think.get.sid|htmlspecialchars}">
+
+
+            <div class="am-form-group">
+              <div class="am-u-sm-9 am-u-sm-push-3">
+                <button type="button" id="add_files" class="am-btn am-btn-primary">添加截图</button>
+
+                <button type="submit" class="am-btn am-btn-primary">添加漏洞</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer class="admin-content-footer">
+      <hr>
+      <p class="am-padding-left">© 2017 WeReport. 226safe Team.</p>
+    </footer>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<include file="Public/footer" /> 
+<script>
+  $(function() {
+    $('#doc-form-file').on('change', function() {
+      var fileNames = '';
+      $.each(this.files, function() {
+        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+      });
+      $('#file-list').html(fileNames);
+    });
+  });
+
+
+
+  $('#add_files').click(function(){
+    $('#bug_file_img').append('<div class="am-form-group am-form-file"><button type="button" class="am-btn am-btn-danger am-btn-sm"><i class="am-icon-cloud-upload"></i> 选择要上传的文件</button><input id="doc-form-file" type="file" name="bug_img[]" multiple></div><div id="file-list"></div>');
+  })
+</script>

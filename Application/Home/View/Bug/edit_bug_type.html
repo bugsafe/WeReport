@@ -1,0 +1,72 @@
+<include file="Public/header" /> 
+
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">修改漏洞类型</strong> / <small>Update Bug Type</small></div>
+      </div>
+
+      <hr/>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+        </div>
+
+        <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+          <form action="{:U('Bug/edit_bug_type')}" method="post" class="am-form am-form-horizontal" enctype="multipart/form-data">
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">漏洞名称 /Bug Name</label>
+              <div class="am-u-sm-9">
+                <input type="text" id="report-name" name="bug_name" value="{$bug_type_info.bug_name}">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label  class="am-u-sm-3 am-form-label">漏洞描述 /Bug Desc</label>
+              <div class="am-u-sm-9">
+                <textarea class="" rows="5"   name="bug_desc">{$bug_type_info.bug_desc}</textarea>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label  class="am-u-sm-3 am-form-label">漏洞修复建议 /Bug Repair</label>
+              <div class="am-u-sm-9">
+                <textarea class="" rows="5"   name="bug_repair">{$bug_type_info.bug_repair}</textarea>
+              </div>
+            </div>
+            <input type="hidden" name="id" value="{$bug_type_info.id}">
+            <div class="am-form-group">
+              <div class="am-u-sm-9 am-u-sm-push-3">
+                <button type="submit" class="am-btn am-btn-primary">保存</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer class="admin-content-footer">
+      <hr>
+      <p class="am-padding-left">© 2017 Wereport.</p>
+    </footer>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<include file="Public/footer" /> 
+<script>
+  $(function() {
+    $('#doc-form-file').on('change', function() {
+      var fileNames = '';
+      $.each(this.files, function() {
+        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+      });
+      $('#file-list').html(fileNames);
+    });
+  });
+</script>

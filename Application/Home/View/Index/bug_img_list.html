@@ -1,0 +1,123 @@
+<include file="Public/header" /> 
+  <!-- sidebar end -->
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">漏洞图片列表</strong> / <small>Bug_img_list</small></div>
+      </div>
+
+      <hr>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-btn-toolbar">
+            <div class="am-btn-group am-btn-group-xs">
+              <button type="button" class="am-btn am-btn-default" data-am-modal="{target: '#my-popup'}"><span class="am-icon-plus"></span> 添加图片</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-gallery-imgbordered" data-am-gallery="{pureview: 1}">
+ <foreach name="bug_img_list" item="vo" >
+  <li>
+    <div class="am-gallery-item">
+      <img src="{$vo}"
+           alt="wereport - {$vo}" data-rel="{$vo}"/>
+       <center> <button type="button" id="{$result_id}" img_url="{$vo}" onclick="confirm_del(this)" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button></center>
+    </div>
+  </li>
+</foreach>
+</ul>
+    </div>
+
+    <footer class="admin-content-footer">
+      <hr>
+      <p class="am-padding-left">© 2017 Wereport.</p>
+    </footer>
+
+  </div>
+  <!-- content end -->
+</div>
+
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">上传漏洞图片 
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd">
+
+    </div>
+  </div>
+</div>
+
+<div class="am-popup" id="my-popup">
+  <div class="am-popup-inner">
+    <div class="am-popup-hd">
+      <h4 class="am-popup-title">上传漏洞图片</h4>
+      <span data-am-modal-close
+            class="am-close">&times;</span>
+    </div>
+  <form action="{:U('Index/add_bug_img')}" method="post"  enctype="multipart/form-data">
+    <div class="am-popup-bd">
+        <div class="am-form-group" >
+          <div class="am-u-sm-9" id="bug_file_img">
+            <div class="am-form-group am-form-file">
+              <button type="button" class="am-btn am-btn-danger am-btn-sm">
+              <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
+              <input id="doc-form-file" type="file" name="bug_img[]" multiple>
+              <input type="hidden" name="id" value="{$result_id}">
+          </div>
+          <div id="file-list"></div>
+          </div>
+           <button type="button" id="add_files" class="am-btn am-btn-primary">添加图片控件</button>
+           <button type="submit" id="add_files" class="am-btn am-btn-primary">上传图片</button>
+        </div>
+    </div>
+  </form>
+  </div>
+</div>
+<include file="Public/footer" /> 
+<script>
+  function confirm_del(_this)
+  {
+    if (confirm("确定要删除该图片吗?")) {
+        var my_this = _this
+        var id = $(my_this).attr('id');
+        var img_url = $(my_this).attr('img_url');
+
+        $.ajax({
+          url:"{:U('Index/del_bug_img')}",
+          type:"post",
+          data:"id="+id+"&img_url="+img_url,
+          success:function(data){
+            if (data == 1) {
+              alert("删除成功");window.location.reload();
+            } else {
+              alert("删除失败");window.location.reload();
+            }
+          }
+        });
+
+    } else {
+      return false;
+    }
+  }
+
+  $(function() {
+    $('#doc-form-file').on('change', function() {
+      var fileNames = '';
+      $.each(this.files, function() {
+        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+      });
+      $('#file-list').html(fileNames);
+    });
+  });
+
+
+  $('#add_files').click(function(){
+    $('#bug_file_img').append('<div class="am-form-group am-form-file"><button type="button" class="am-btn am-btn-danger am-btn-sm"><i class="am-icon-cloud-upload"></i> 选择要上传的文件</button><input id="doc-form-file" type="file" name="bug_img[]" multiple></div><div id="file-list"></div>');
+  })
+</script>

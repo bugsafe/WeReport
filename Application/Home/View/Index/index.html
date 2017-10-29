@@ -1,0 +1,119 @@
+<include file="Public/header" /> 
+  <!-- sidebar end -->
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">报告</strong> / <small>WeReport</small></div>
+      </div>
+
+      <hr>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-btn-toolbar">
+            <div class="am-btn-group am-btn-group-xs">
+              <a href="{:U('Index/add_report')}"><button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 创建报告</button></a>
+            </div>
+          </div>
+        </div>
+<!--         <div class="am-u-sm-12 am-u-md-3">
+          <div class="am-input-group am-input-group-sm">
+            <input type="text" class="am-form-field">
+          <span class="am-input-group-btn">
+            <button class="am-btn am-btn-default" type="button">搜索</button>
+          </span>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="am-g">
+        <div class="am-u-sm-12">
+            <table class="am-table am-table-striped am-table-hover table-main">
+              <thead>
+              <tr>
+                <th class="table-id">ID</th>
+                <th class="table-title">报告名称</th>
+                <th class="table-title">项目开始时间</th>
+                <th class="table-title">项目结束时间</th>
+                <th class="table-title">报告创建时间</th>
+                <th class="table-set">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+            <foreach name="report_list" item="vo" >
+              <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.poject_name}</td>
+                <td>{$vo.poject_start_time}</td>
+                <td class="am-hide-sm-only">{$vo.poject_end_time}</td>
+                <td class="am-hide-sm-only">{$vo.add_time}</td>
+                <td>
+                  <div class="am-btn-toolbar">
+                    <div class="am-btn-group am-btn-group-xs">
+                      <a href="{:U('Index/edit_report_info',array('id'=>$vo['id']))}"  class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 编辑</a>
+                      <button type="button" id="{$vo.id}" onclick="confirm_del_report(this)" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                      <a href="{:U('Download/download',array('id'=>$vo['id']))}"  class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-download"></span> 下载报告</a>
+                      <a href="{:U('Index/system_list',array('id'=>$vo['id']))}"  class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 目标列表</a>
+
+
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </foreach>
+
+              </tbody>
+            </table>
+            <div class="am-cf">
+              共 {$count} 条记录
+              <div class="am-fr">
+                <ul class="am-pagination">
+                    {$page}
+                </ul>
+              </div>
+            </div>
+            <hr />
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="admin-content-footer">
+      <hr>
+      <p class="am-padding-left">© 2017 WeReport. 226safe Team.</p>
+    </footer>
+
+  </div>
+  <!-- content end -->
+</div>
+
+<include file="Public/footer" /> 
+<script>
+  $('.am-fr ul div a').unwrap('div').wrap('<li></li>');
+  $('.am-fr ul span').wrap('<li class="am-active"></li>');
+
+  function confirm_del_report(_this)
+  {
+    if (confirm("确定要删除该报告吗?(确定后将删除关联该报告的一切信息包括图片),该操作不可逆!")) {
+      var my_this = _this;
+      var id = $(my_this).attr('id');
+      $.ajax({
+        url:"{:U('Index/del_report')}",
+        type:"post",
+        data:'id='+id,
+        success:function(data){
+          if (data == 1) {
+            alert("删除成功");window.location.reload();
+          } else {
+            alert("删除失败");window.location.reload();
+          }
+        }
+      });
+
+    } else {
+      return false;
+    }
+  }
+</script>

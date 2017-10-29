@@ -1,0 +1,82 @@
+<include file="Public/header" /> 
+
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">修改漏洞</strong> / <small>Update Bug</small></div>
+      </div>
+
+      <hr/>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+        </div>
+
+        <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+          <form action="{:U('Index/edit_bug_info')}" method="post" class="am-form am-form-horizontal" enctype="multipart/form-data">
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">漏洞类型 /Bug Type</label>
+              <div class="am-u-sm-9">
+                <select name="bug_level">
+                  <option value="0" {$bug_info['bug_level'] == 0 ?selected:''}>低危</option>
+                  <option value="1" {$bug_info['bug_level'] == 1 ?selected:''}>中危</option>
+                  <option value="2" {$bug_info['bug_level'] == 2 ?selected:''}>高危</option>
+                  <option value="3" {$bug_info['bug_level'] == 3 ?selected:''}>严重</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">漏洞类型 /Bug Type</label>
+              <div class="am-u-sm-9">
+                <select name="bid">
+                  <foreach name="bug_type_list" item="vo">
+                    <option value="{$vo.id}" {$vo['id'] == $bug_info['bid']?selected:''}>{$vo.bug_name}</option>
+                  </foreach>
+                </select>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">漏洞URL /Bug URL</label>
+              <div class="am-u-sm-9">
+                <input type="text" id="report-name" name="bug_url" value="{$bug_info.bug_url}">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="report-name" class="am-u-sm-3 am-form-label">漏洞参数 /Bug Param</label>
+              <div class="am-u-sm-9">
+                <input type="text" id="report-name" name="bug_param" value="{$bug_info.bug_param}">
+              </div>
+            </div>
+
+            <input type="hidden" name="id" value="{$bug_info.id}">
+            <input type="hidden" name="pid" value="{$bug_info.pid}">
+            <input type="hidden" name="sid" value="{$bug_info.sid}">
+
+
+            <div class="am-form-group">
+              <div class="am-u-sm-9 am-u-sm-push-3">
+                <button type="submit" class="am-btn am-btn-primary">保存</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer class="admin-content-footer">
+      <hr>
+      <p class="am-padding-left">© 2017 WeReport. 226safe Team.</p>
+    </footer>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<include file="Public/footer" /> 
